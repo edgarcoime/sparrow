@@ -1,0 +1,9 @@
+services:
+  sparrow:
+    build: .
+    ports:
+      - "8080:80"
+    container_name: sparrow-2022
+    restart: unless-stopped
+    environment:
+      - NODE_ENV=production

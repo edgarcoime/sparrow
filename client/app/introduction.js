@@ -11,31 +11,6 @@ export const introduction = (terminal, config) => {
     "Simulating evolution through an ever-growing neural network, powered by a genetic algorithm"
   );
   terminal.println("");
-  terminal.println("---- About ----");
-  terminal.println("");
-  terminal.println(
-    "Each triangle represents a bird; each bird has an *eye* that is able to see around the bird and a *brain* that decides where and how fast the bird should be moving."
-  );
-  terminal.println("");
-  terminal.println(
-    "Each circle represents a piece of food that birds are supposed to find and eat."
-  );
-  terminal.println("");
-  terminal.println(
-    "All birds start with randomized brains and after 2500 turns birds who manage to eat the most food are reproduced, and their offspring starts the simulation over again."
-  );
-  terminal.println("");
-  terminal.println(
-    "Thanks to evolution, every generation gets slightly better at locating the food - almost as if the birds programmed themselves!"
-  );
-  terminal.println("");
-  terminal.println(
-    "You can affect the simulation by entering commands in the input at the bottom of this box - for starters, try executing the `train` command a few times (write `t`, press enter, write `t`, press enter etc.) - this fast-forwards the simulation, allowing you to see the birds getting smarter by the second."
-  );
-  terminal.println("");
-  terminal.println("Would you like to read the source code?");
-  terminal.println("https://github.com/Patryk27/shorelark");
-  terminal.println("");
   terminal.println("Have fun!");
   terminal.println("");
   terminal.println("---- Commands ----");

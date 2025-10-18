@@ -1,0 +1,14 @@
+services:
+  sparrow-dev:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    ports:
+      - "8081:8081"
+    container_name: sparrow-2022-dev
+    volumes:
+      - .:/app
+      - /app/client/node_modules
+    environment:
+      - NODE_ENV=development
+    command: sh -c "cd client && npm start"
