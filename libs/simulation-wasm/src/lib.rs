@@ -18,6 +18,20 @@ impl Simulation {
         Self { rng, sim }
     }
 
+    #[wasm_bindgen(js_name = withWorldSizes)]
+    pub fn with_world_sizes(animal_count: usize, food_count: usize) -> Self {
+        let mut rng = thread_rng();
+        let sim = sim::Simulation::random_with_config(
+            &mut rng,
+            sim::SimulationConfig {
+                animal_count,
+                food_count,
+            },
+        );
+
+        Self { rng, sim }
+    }
+
     pub fn world(&self) -> World {
         World::from(self.sim.world())
     }

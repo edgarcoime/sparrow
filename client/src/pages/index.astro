@@ -1,10 +1,17 @@
 ---
-import Layout from "../layouts/Layout.astro";
-import Simulation from "../components/Simulation.svelte";
+import Layout from "@/layouts/Layout.astro";
+import SimulationPanel from "@/components/SimulationPanel.svelte";
+
+const animalCount = 80;
+const foodCount = 120;
 ---
 
 <Layout>
 	<div id="app">
-		<Simulation client:only="svelte" />
+		<SimulationPanel
+			client:load
+			initialAnimalCount={animalCount}
+			initialFoodCount={foodCount}
+		/>
 	</div>
 </Layout>

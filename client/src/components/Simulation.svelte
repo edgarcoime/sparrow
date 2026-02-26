@@ -1,23 +1,35 @@
 <script lang="ts">
-  import { onMount } from "svelte";
   import { Simulation } from "lib-simulation-wasm";
+  import {
+    simulationStore,
+    type SimulationConfig,
+  } from "@/store/SimulationConfigStore.svelte";
 
-  let totalAnimals = 0;
-  let sample = "";
-  let status = "Loading simulation...";
-  let error: string | null = null;
+  let totalAnimals = $state(0);
+  let sample = $state("");
+  let status = $state("Loading simulation...");
+  let error = $state<string | null>(null);
 
-  onMount(() => {
+  function runSimulation(config: SimulationConfig) {
+    const { animalCount, foodCount } = config;
+
+    const simulation = Simulation.withWorldSizes(animalCount, foodCount);
+    const world = simulation.world();
+
+    totalAnimals = world.animals.length;
+    sample = world.animals
+      .slice(0, 6)
+      .map((animal) => `(${animal.x.toFixed(2)}, ${animal.y.toFixed(2)})`)
+      .join(" · ");
+    status = `Simulation loaded via wasm-bindgen (animals=${animalCount}, foods=${foodCount}).`;
+  }
+
+  $effect(() => {
+    simulationStore.submitCount;
+
     try {
-      const simulation = new Simulation();
-      const world = simulation.world();
-
-      totalAnimals = world.animals.length;
-      sample = world.animals
-        .slice(0, 6)
-        .map((animal) => `(${animal.x.toFixed(2)}, ${animal.y.toFixed(2)})`)
-        .join(" · ");
-      status = "Simulation loaded via wasm-bindgen.";
+      error = null;
+      runSimulation(simulationStore.appliedConfig);
     } catch (err) {
       error = err instanceof Error ? err.message : String(err);
       status = "Failed to load simulation.";
