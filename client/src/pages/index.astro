@@ -1,0 +1,10 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Simulation from "../components/Simulation.svelte";
+---
+
+<Layout>
+	<div id="app">
+		<Simulation client:only="svelte" />
+	</div>
+</Layout>

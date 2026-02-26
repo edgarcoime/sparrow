@@ -1,0 +1,16 @@
+[tasks.install]
+run = "npm install"
+sources = ["package.json", "package-lock.json"]
+outputs = ["node_modules/**"]
+
+[tasks.dev]
+run = "npm run dev -- --port 3001"
+depends = ["install"]
+
+[tasks.build]
+run = "npm run build"
+depends = ["install"]
+
+[tasks.preview]
+run = "npm run preview -- --port 3001"
+depends = ["build"]

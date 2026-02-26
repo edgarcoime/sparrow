@@ -1,3 +1,5 @@
+experimental_monorepo_root = true
+
 [tools]
 node = "24"
 rust = "stable"
@@ -5,17 +7,26 @@ rust = "stable"
 
 [tasks."wasm:build"]
 run = "wasm-pack build libs/simulation-wasm --target bundler --out-dir pkg"
-
-[tasks."client:install"]
-run = "npm --prefix client install"
-
-[tasks."client:dev"]
-run = "npm --prefix client run dev -- --port 3000"
+sources = ["libs/simulation-wasm/Cargo.toml", "libs/simulation-wasm/src/**"]
+outputs = ["libs/simulation-wasm/pkg/**"]
 
 [tasks.dev]
-depends = ["wasm:build", "client:install"]
-run = "npm --prefix client run dev -- --port 3000"
+depends = ["wasm:build"]
+run = "mise //client:dev"
 
 [tasks.build]
-depends = ["wasm:build", "client:install"]
-run = "npm --prefix client run build"
+depends = ["wasm:build"]
+run = "mise //client:build"
+
+[tasks.start]
+depends = ["build"]
+run = "mise //client:start"
+
+[tasks."simple:install"]
+run = "mise //simple:install"
+
+[tasks."simple:dev"]
+run = "mise //simple:dev"
+
+[tasks."simple:build"]
+run = "mise //simple:build"
