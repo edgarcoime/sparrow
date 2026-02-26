@@ -1,0 +1,21 @@
+[tools]
+node = "24"
+rust = "stable"
+"aqua:rustwasm/wasm-pack" = "latest"
+
+[tasks."wasm:build"]
+run = "wasm-pack build libs/simulation-wasm --target bundler --out-dir pkg"
+
+[tasks."client:install"]
+run = "npm --prefix client install"
+
+[tasks."client:dev"]
+run = "npm --prefix client run dev -- --port 3000"
+
+[tasks.dev]
+depends = ["wasm:build", "client:install"]
+run = "npm --prefix client run dev -- --port 3000"
+
+[tasks.build]
+depends = ["wasm:build", "client:install"]
+run = "npm --prefix client run build"
