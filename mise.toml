@@ -9,20 +9,24 @@ rust = "stable"
 "aqua:rustwasm/wasm-pack" = "latest"
 
 [tasks."wasm:build"]
+description = "Build the WebAssembly package for the simulation library."
 run = "cd libs/simulation-wasm && wasm-pack build --target bundler --out-dir pkg"
 sources = ["libs/simulation-wasm/Cargo.toml", "libs/simulation-wasm/src/**"]
 outputs = ["libs/simulation-wasm/pkg/**"]
 
 [tasks.dev]
+description = "Run the development server for the client application."
 depends = ["wasm:build"]
 run = "mise //client:dev"
 
 [tasks.build]
+description = "Build the client application for production."
 depends = ["wasm:build"]
 run = "mise //client:build"
 
 [tasks.start]
-depends = ["build"]
+description = "Start the client application in production mode."
+depends = ["wasm:build"]
 run = "mise //client:start"
 
 [tasks."simple:install"]

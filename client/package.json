@@ -6,11 +6,10 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "start": "node ./dist/server/entry.mjs",
+    "start": "astro preview",
     "astro": "astro"
   },
   "dependencies": {
-    "@astrojs/node": "^9.3.3",
     "@astrojs/svelte": "^7.2.5",
     "@tailwindcss/vite": "^4.2.1",
     "astro": "^5.17.1",
@@ -20,7 +19,6 @@
     "typescript": "^5.9.3"
   },
   "devDependencies": {
-    "vite-plugin-top-level-await": "^1.4.2",
     "vite-plugin-wasm": "^3.4.1"
   }
 }
