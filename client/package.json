@@ -1,19 +1,26 @@
 {
-  "name": "shorelark",
-  "version": "0.0.0",
-  "description": "",
-  "main": "index.js",
+  "name": "client2",
+  "type": "module",
+  "version": "0.0.1",
   "scripts": {
-    "build": "webpack --config webpack.config.js",
-    "start": "webpack-dev-server"
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "start": "node ./dist/server/entry.mjs",
+    "astro": "astro"
   },
   "dependencies": {
-    "lib-simulation-wasm": "file:../libs/simulation-wasm/pkg"
+    "@astrojs/node": "^9.3.3",
+    "@astrojs/svelte": "^7.2.5",
+    "@tailwindcss/vite": "^4.2.1",
+    "astro": "^5.17.1",
+    "lib-simulation-wasm": "file:../libs/simulation-wasm/pkg",
+    "svelte": "^5.53.5",
+    "tailwindcss": "^4.2.1",
+    "typescript": "^5.9.3"
   },
   "devDependencies": {
-    "webpack": "^4.29.3",
-    "webpack-cli": "^3.1.0",
-    "webpack-dev-server": "^3.1.5",
-    "copy-webpack-plugin": "^5.0.0"
+    "vite-plugin-top-level-await": "^1.4.2",
+    "vite-plugin-wasm": "^3.4.1"
   }
 }

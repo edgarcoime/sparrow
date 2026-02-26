@@ -1,0 +1,25 @@
+[tasks.install]
+run = "npm install"
+sources = ["package.json", "package-lock.json"]
+outputs = ["node_modules/**"]
+
+[tasks.dev]
+run = "npm run dev -- --port 3000"
+depends = ["install"]
+
+[tasks.build]
+run = "npm run build"
+depends = ["install"]
+sources = [
+  "package.json",
+  "package-lock.json",
+  "src/**",
+  "public/**",
+  "astro.config.mjs",
+  "../libs/simulation-wasm/pkg/**"
+]
+outputs = ["dist/**"]
+
+[tasks.start]
+run = "HOST=0.0.0.0 PORT=3000 npm run start"
+depends = ["build"]

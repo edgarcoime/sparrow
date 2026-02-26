@@ -1,55 +1,57 @@
-pub use self::{animal::*, world::*, food::*};
-use serde::Serialize;
 use lib_simulation as sim;
 use wasm_bindgen::prelude::*;
 use rand::prelude::*;
 
-mod animal;
-mod food;
-mod world;
-
 #[wasm_bindgen]
-// #[derive(Debug)]
 pub struct Simulation {
     rng: ThreadRng,
-    sim: sim::Simulation
+    sim: sim::Simulation,
 }
 
 #[wasm_bindgen]
 impl Simulation {
     #[wasm_bindgen(constructor)]
-    pub fn new(config: JsValue) -> Self {
-        let config: sim::Config = config.into_serde().unwrap();
-
+    pub fn new() -> Self {
         let mut rng = thread_rng();
-        let sim = sim::Simulation::random(config, &mut rng);
+        let sim = sim::Simulation::random(&mut rng);
 
         Self { rng, sim }
     }
 
-    pub fn default_config() -> JsValue {
-        JsValue::from_serde(&sim::Config::default()).unwrap()
-    }
-
-    pub fn config(&self) -> JsValue {
-        JsValue::from_serde(self.sim.config()).unwrap()
-    }
-
-    pub fn world(&self) -> JsValue {
-        let world = World::from(self.sim.world());
-        JsValue::from_serde(&world).unwrap()
-    }
-
-    pub fn step(&mut self) -> Option<String> {
-        self.sim.step(&mut self.rng).map(|stats| stats.to_string())
-    }
-
-    pub fn train(&mut self) -> String {
-        self.sim.train(&mut self.rng).to_string()
+    pub fn world(&self) -> World {
+        World::from(self.sim.world())
     }
 }
 
+
 #[wasm_bindgen]
-pub fn whos_that_dog() -> String {
-    "That's not a dog that's a turtle".into()
+#[derive(Debug, Clone)]
+pub struct World {
+    #[wasm_bindgen(getter_with_clone)]
+    pub animals: Vec<Animal>,
+}
+
+impl From<&sim::World> for World {
+    fn from(world: &sim::World) -> Self {
+        let animals = world.animals().iter().map(Animal::from).collect();
+
+        Self { animals }
+    }
+}
+
+
+#[wasm_bindgen]
+#[derive(Debug, Clone)]
+pub struct Animal {
+    pub x: f32,
+    pub y: f32,
+}
+
+impl From<&sim::Animal> for Animal {
+    fn from(animal: &sim::Animal) -> Self {
+        Self {
+            x: animal.position().x,
+            y: animal.position().y,
+        }
+    }
 }

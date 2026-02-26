@@ -1,13 +1,9 @@
-pub use self::uniform::*;
-
 use crate::*;
 
 mod uniform;
+pub use self::uniform::*;
 
-// Crossover algorithms to use for 
-// combining 2 genomes from parents
-
-pub trait CrossOverMethod {
+pub trait CrossoverMethod {
     fn crossover(
         &self,
         rng: &mut dyn RngCore,
