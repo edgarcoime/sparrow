@@ -1,12 +1,15 @@
 experimental_monorepo_root = true
 
+[monorepo]
+config_roots = ["client", "simple"]
+
 [tools]
 node = "24"
 rust = "stable"
 "aqua:rustwasm/wasm-pack" = "latest"
 
 [tasks."wasm:build"]
-run = "wasm-pack build libs/simulation-wasm --target bundler --out-dir pkg"
+run = "cd libs/simulation-wasm && wasm-pack build --target bundler --out-dir pkg"
 sources = ["libs/simulation-wasm/Cargo.toml", "libs/simulation-wasm/src/**"]
 outputs = ["libs/simulation-wasm/pkg/**"]
 
