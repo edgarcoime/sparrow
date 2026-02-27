@@ -171,20 +171,20 @@
     </div>
 
     <section class="mt-4 shrink-0 rounded-xl border border-slate-800 bg-slate-950/95 px-4 py-3 text-[0.7rem] uppercase tracking-[0.18em] text-slate-500">
-      <div class="grid grid-cols-3 gap-3">
-        <div>
+      <div class="grid grid-cols-1 gap-3 sm:grid-cols-3">
+        <div class="flex items-center justify-between gap-4 sm:block">
           <div>animals</div>
           <div class="mt-1 text-sm tracking-normal text-slate-200">
             {simulationStore.appliedConfig.animalCount}
           </div>
         </div>
-        <div>
+        <div class="flex items-center justify-between gap-4 sm:block">
           <div>food</div>
           <div class="mt-1 text-sm tracking-normal text-slate-200">
             {simulationStore.appliedConfig.foodCount}
           </div>
         </div>
-        <div>
+        <div class="flex items-center justify-between gap-4 sm:block">
           <div>action</div>
           <div class="mt-1 text-sm tracking-normal text-cyan-300">{simulationStore.lastAction}</div>
         </div>

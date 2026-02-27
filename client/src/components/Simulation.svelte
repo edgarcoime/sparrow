@@ -80,7 +80,7 @@
         </div>
       </div>
 
-      <div class="grid min-h-[24rem] flex-1 place-items-center rounded-lg border border-dashed border-slate-700 bg-[radial-gradient(circle_at_top,_rgba(56,189,248,0.08),_transparent_40%),linear-gradient(180deg,rgba(15,23,42,0.94),rgba(2,6,23,0.98))]">
+      <div class="grid min-h-[50vh] flex-1 place-items-center rounded-lg border border-dashed border-slate-700 bg-[radial-gradient(circle_at_top,_rgba(56,189,248,0.08),_transparent_40%),linear-gradient(180deg,rgba(15,23,42,0.94),rgba(2,6,23,0.98))] xl:min-h-[24rem]">
         <div class="max-w-xl space-y-4 px-6 text-center">
           <div class="text-[0.65rem] uppercase tracking-[0.38em] text-slate-500">
             Future render surface
@@ -94,7 +94,7 @@
       </div>
     </section>
 
-    <aside class="flex h-full flex-col space-y-4">
+    <aside class="hidden xl:flex xl:h-full xl:flex-col xl:space-y-4">
       <section class="rounded-xl border border-slate-800 bg-slate-950/80 p-4">
         <p class="text-[0.65rem] uppercase tracking-[0.28em] text-slate-500">Status</p>
         <p class="mt-3 text-sm leading-7 text-slate-300">{status}</p>
