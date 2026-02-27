@@ -3,10 +3,14 @@ export type SimulationConfig = {
   foodCount: number;
 };
 
+export type SimulationAction = "initialize" | "submit" | "step";
+
 const DEFAULT_CONFIG: SimulationConfig = {
   animalCount: 80,
   foodCount: 120,
 };
+
+const DEFAULT_STEP_COUNT = 1;
 
 function normalizeCount(value: number): number {
   if (!Number.isFinite(value)) return 0;
@@ -21,6 +25,12 @@ function normalizeConfig(config: SimulationConfig): SimulationConfig {
   };
 }
 
+function normalizeStepCount(value: number): number {
+  if (!Number.isFinite(value)) return DEFAULT_STEP_COUNT;
+  const parsed = Math.floor(value);
+  return parsed < 1 ? DEFAULT_STEP_COUNT : parsed;
+}
+
 function applyConfig(target: SimulationConfig, source: SimulationConfig) {
   target.animalCount = source.animalCount;
   target.foodCount = source.foodCount;
@@ -29,7 +39,10 @@ function applyConfig(target: SimulationConfig, source: SimulationConfig) {
 const state = $state({
   draftConfig: { ...DEFAULT_CONFIG },
   appliedConfig: { ...DEFAULT_CONFIG },
-  submitCount: 0,
+  draftStepCount: DEFAULT_STEP_COUNT,
+  lastStepCount: DEFAULT_STEP_COUNT,
+  runVersion: 0,
+  lastAction: "initialize" as SimulationAction,
 });
 
 export const simulationStore = {
@@ -39,14 +52,24 @@ export const simulationStore = {
   get appliedConfig() {
     return state.appliedConfig;
   },
-  get submitCount() {
-    return state.submitCount;
+  get draftStepCount() {
+    return state.draftStepCount;
+  },
+  get lastStepCount() {
+    return state.lastStepCount;
+  },
+  get runVersion() {
+    return state.runVersion;
+  },
+  get lastAction() {
+    return state.lastAction;
   },
   initialize(config: SimulationConfig) {
     const next = normalizeConfig(config);
     applyConfig(state.draftConfig, next);
     applyConfig(state.appliedConfig, next);
-    state.submitCount += 1;
+    state.lastAction = "initialize";
+    state.runVersion += 1;
   },
   patchDraft(config: Partial<SimulationConfig>) {
     const next = normalizeConfig({
@@ -56,13 +79,25 @@ export const simulationStore = {
 
     applyConfig(state.draftConfig, next);
   },
+  setDraftStepCount(value: number) {
+    state.draftStepCount = normalizeStepCount(value);
+  },
   submit() {
     applyConfig(state.appliedConfig, state.draftConfig);
-    state.submitCount += 1;
+    state.lastAction = "submit";
+    state.runVersion += 1;
+  },
+  step(count = state.draftStepCount) {
+    state.lastStepCount = normalizeStepCount(count);
+    state.lastAction = "step";
+    state.runVersion += 1;
   },
   reset() {
     applyConfig(state.draftConfig, DEFAULT_CONFIG);
     applyConfig(state.appliedConfig, DEFAULT_CONFIG);
-    state.submitCount += 1;
+    state.draftStepCount = DEFAULT_STEP_COUNT;
+    state.lastStepCount = DEFAULT_STEP_COUNT;
+    state.lastAction = "submit";
+    state.runVersion += 1;
   },
 };
