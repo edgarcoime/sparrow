@@ -38,51 +38,45 @@ impl MutationMethod for GaussianMutation {
 mod tests {
     use rand::SeedableRng;
     use rand_chacha::ChaCha8Rng;
+    use super::*;
+
+    fn actual(chance: f32, coeff: f32) -> Vec<f32> {
+        let mut rng = ChaCha8Rng::from_seed(Default::default());
+        let mut child = vec![1.0, 2.0, 3.0, 4.0, 5.0].into_iter().collect();
+
+        GaussianMutation::new(chance, coeff).mutate(&mut rng, &mut child);
+
+        child.into_iter().collect()
+    }
 
     mod given_zero_chance {
+        use approx::assert_relative_eq;
+
+        fn actual(coeff: f32) -> Vec<f32> {
+            super::actual(0.0, coeff)
+        }
+
         mod and_zero_coefficient {
+            use super::*;
+
             #[test]
             fn does_not_change_the_original_chromosome() {
-                todo!();
+                let actual = actual(0.0);
+                let expected = vec![1.0, 2.0, 3.0, 4.0, 5.0];
+
+                assert_relative_eq!(actual.as_slice(), expected.as_slice());
             }
         }
 
         mod and_nonzero_coefficient {
+            use super::*;
+
             #[test]
             fn does_not_change_the_original_chromosome() {
-                todo!();
-            }
-        }
-    }
+                let actual = actual(0.5);
+                let expected = vec![1.0, 2.0, 3.0, 4.0, 5.0];
 
-    mod given_fifty_fifty_chance {
-        mod and_zero_coefficient {
-            #[test]
-            fn does_not_change_the_original_chromosome() {
-                todo!();
-            }
-        }
-
-        mod and_nonzero_coefficient {
-            #[test]
-            fn slightly_changes_the_original_chromosome() {
-                todo!();
-            }
-        }
-    }
-
-    mod given_max_chance {
-        mod and_zero_coefficient {
-            #[test]
-            fn does_not_change_the_original_chromosome() {
-                todo!();
-            }
-        }
-
-        mod and_nonzero_coefficient {
-            #[test]
-            fn entirely_changes_the_original_chromosome() {
-                todo!();
+                assert_relative_eq!(actual.as_slice(), expected.as_slice());
             }
         }
     }
