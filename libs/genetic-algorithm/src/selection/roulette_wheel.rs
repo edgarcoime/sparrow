@@ -1,4 +1,7 @@
-pub use crate::*;
+use rand::{RngCore, prelude::SliceRandom};
+
+use super::SelectionMethod;
+use crate::*;
 
 pub struct RouletteWheelSelection;
 
@@ -15,11 +18,13 @@ impl SelectionMethod for RouletteWheelSelection {
 
 #[cfg(test)]
 mod tests {
-    use crate::*;
     use rand::SeedableRng;
     use rand_chacha::ChaCha8Rng;
     use std::collections::BTreeMap;
     use std::iter::FromIterator;
+
+    use super::{RouletteWheelSelection, SelectionMethod};
+    use crate::individual::{Individual, TestIndividual};
 
     #[test]
     fn roulette_wheel_selection() {
