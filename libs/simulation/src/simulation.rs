@@ -34,4 +34,10 @@ impl Simulation {
     pub fn world(&self) -> &World {
         &self.world
     }
+
+    pub fn step(&mut self) {
+        for animal in self.world.animals_mut() {
+            animal.step();
+        }
+    }
 }

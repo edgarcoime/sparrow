@@ -28,6 +28,10 @@ impl World {
         &self.animals
     }
 
+    pub fn animals_mut(&mut self) -> &mut [Animal] {
+        &mut self.animals
+    }
+
     pub fn foods(&self) -> &[Food] {
         &self.foods
     }

@@ -23,4 +23,12 @@ impl Animal {
     pub fn rotation(&self) -> na::Rotation2<f32> {
         self.rotation
     }
+
+    pub fn step(&mut self) {
+        self.position += self.rotation * na::Vector2::new(0.0, self.speed);
+
+        // Bound the position to the world
+        self.position.x = na::wrap(self.position.x, 0.0, 1.0);
+        self.position.y = na::wrap(self.position.y, 0.0, 1.0);
+    }
 }
