@@ -1,4 +1,4 @@
-use crate::*;
+use crate::prelude::*;
 
 #[derive(Debug)]
 pub struct Food {
