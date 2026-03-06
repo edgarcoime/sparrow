@@ -1,14 +1,15 @@
 use crate::chromosome::Chromosome;
 
 pub trait Individual {
+    fn create(chromosome: Chromosome) -> Self;
     fn fitness(&self) -> f32;
     fn chromosome(&self) -> &Chromosome;
 }
 
 #[cfg(test)]
-#[derive(Clone, Debug, PartialEq)]
+#[derive(Clone, Debug)]
 pub enum TestIndividual {
-    //WithChromosome { chromosome: Chromosome },
+    WithChromosome { chromosome: Chromosome },
     WithFitness { fitness: f32 },
 }
 
@@ -21,22 +22,20 @@ impl TestIndividual {
 
 #[cfg(test)]
 impl Individual for TestIndividual {
-    //fn create(chromosome: Chromosome) -> Self {
-    //    Self::WithChromosome { chromosome }
-    //}
-    //
+    fn create(chromosome: Chromosome) -> Self {
+        Self::WithChromosome { chromosome }
+    }
 
     fn chromosome(&self) -> &Chromosome {
-        panic!("not supported for TestIndividual");
-        //match self {
-        //    Self::WithChromosome { chromosome } => chromosome,
-        //    Self::WithFitness { .. } => panic!("not supported for TestIndividual::WithFitness"),
-        //}
+        match self {
+            Self::WithChromosome { chromosome } => chromosome,
+            Self::WithFitness { .. } => panic!("not supported for TestIndividual::WithFitness"),
+        }
     }
 
     fn fitness(&self) -> f32 {
         match self {
-            //Self::WithChromosome { chromosome } => chromosome.iter().sum(),
+            Self::WithChromosome { chromosome } => chromosome.iter().sum(),
             Self::WithFitness { fitness } => *fitness,
         }
     }
