@@ -14,6 +14,7 @@
     "@tailwindcss/vite": "^4.2.1",
     "astro": "^5.17.1",
     "lib-simulation-wasm": "file:../libs/simulation-wasm/pkg",
+    "pixi.js": "^8.16.0",
     "svelte": "^5.53.5",
     "tailwindcss": "^4.2.1",
     "typescript": "^5.9.3"
