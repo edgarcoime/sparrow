@@ -1,4 +1,3 @@
-<!-- SimulationCanvas.svelte -->
 <script lang="ts">
   import { onMount } from 'svelte';
   import * as PIXI from 'pixi.js';
@@ -13,7 +12,12 @@
 
   let { engineConfig, simConfig, onHandleReady }: Props = $props();
   let container: HTMLDivElement;
-  let engine: SimulationHandle | null = null;
+  let engine: SimulationHandle = {
+    pause: () => {},
+    resume: () => {},
+    setFps: () => {},
+    destroy: () => {},
+  };
 
   onMount(() => {
     const app = new PIXI.Application();
@@ -29,7 +33,7 @@
 
     // onMount cleanup — mirrors useEffect's return fn
     return () => {
-      engine?.destroy?.();
+      engine.destroy();
       app.destroy();
     }
   });
